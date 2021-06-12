@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Persona } from 'src/app/entities/persona';
 import { NewServiceService } from 'src/app/services/new-service.service';
 import { ListarPersonaComponent } from '../listar-persona/listar-persona.component';
@@ -15,6 +16,7 @@ export class ModificarPersonaComponent implements OnInit {
  
 
   constructor(private newService: NewServiceService,
+    private _snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<ListarPersonaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {persona: Persona}) {
     this.modificarPersonaForm = new FormGroup({
@@ -29,7 +31,6 @@ export class ModificarPersonaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data.persona);
     this.updateForm(this.data.persona);
   }
 
@@ -41,7 +42,7 @@ export class ModificarPersonaComponent implements OnInit {
     // Si el form es válido
     if(this.modificarPersonaForm.valid){
       // Llamamos al servicio para crear una persona
-      this.newService.modificarPersona(this.data.persona.Id, {
+      this.newService.modificarPersona(this.data.persona._id, {
         Nombre: this.modificarPersonaForm.value.nombre,
         Apellidos: this.modificarPersonaForm.value.apellidos,
         Edad: this.modificarPersonaForm.value.edad,
@@ -49,13 +50,22 @@ export class ModificarPersonaComponent implements OnInit {
         Cumpleanyos: this.modificarPersonaForm.value.cumpleanyos,
         Color: this.modificarPersonaForm.value.color,
         Sexo: this.modificarPersonaForm.value.sexo,
-      }).subscribe();
-
-      // Limpiamos y salimos
-      this.modificarPersonaForm.reset();
-      this.dialogRef.close();
+      }).subscribe(
+        res => {
+          // Mensaje de confirmación de creación
+          this._snackBar.open("Usuario modificado correctamente","Descartar");
+  
+          // Limpiamos y salimos
+          this.modificarPersonaForm.reset();
+          this.dialogRef.close();
+         
+        }, (error) => {
+        // Mensaje de error de creación
+          this._snackBar.open("Ha ocurrido un error","Descartar");
+        }
+      )
+    }    
   }
-}
 
   onCancelar(){
     // Cerramios dialogo
@@ -64,7 +74,6 @@ export class ModificarPersonaComponent implements OnInit {
 
   // Cargamos los field con los datos obtenidos de la tabla
   updateForm(persona: Persona){
-    console.log(persona.Nombre);
     this.modificarPersonaForm.setValue({
       nombre: persona.Nombre,
       apellidos: persona.Apellidos,

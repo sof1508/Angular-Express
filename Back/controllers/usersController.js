@@ -65,8 +65,8 @@ module.exports.users_create = function(req, res, next) {
     user.Apellidos = req.body.Apellidos;
     user.Edad = req.body.Edad;
     user.Dni = req.body.Dni;
-    user.Cumpleanos = req.body.Cumpleanos;
-    user.ColorFav = req.body.ColorFav;
+    user.Cumpleanyos = req.body.Cumpleanyos;
+    user.Color = req.body.Color;
     user.Sexo = req.body.Sexo;
     db.get().db('apidb').collection('users').insertOne(user, function(err, result) {
         if (err) {
@@ -94,8 +94,8 @@ module.exports.users_update_one = function(req, res, next) {
             Apellidos: req.body.Apellidos,
             Edad: req.body.Edad,
             Dni: req.body.Dni,
-            Cumpleanos: req.body.Cumpleanos,
-            ColorFav: req.body.ColorFav,
+            Cumpleanyos: req.body.Cumpleanyos,
+            Color: req.body.Color,
             Sexo: req.body.Sexo
         }
     };

@@ -1,66 +1,67 @@
-<body>
-    <mat-toolbar class="toolbar">
-        <span>Personas</span>
-    </mat-toolbar>
-    <div class="crear">
-        <button class="boton" mat-raised-button (click)="onCreate()">
-                <mat-icon>add</mat-icon>Crear
+<mat-toolbar class="toolbar">
+    <span>Personas</span>
+</mat-toolbar>
+<div>
+    <button class="boton" mat-raised-button (click)="onCreate()">
+      <mat-icon>add</mat-icon>Crear
+    </button>
+    <button class="boton" mat-raised-button color="warn" (click)="onDeleteAll()">
+      <mat-icon>delete_forever</mat-icon>Borrar todo
+    </button>
+</div>
+<div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Nombre}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Apellidos">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Apellidos</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Apellidos}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Edad">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Edad</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Edad}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Dni">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Dni}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Cumpleaños">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Cumpleaños</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Cumpleanyos | date: 'dd/MM/yyyy' }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Color Favorito">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Color favorito</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Color}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="Sexo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Sexo</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.Sexo}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+
+            <mat-cell *matCellDef="let row">
+                <button mat-icon-button (click)="onEdit(row)">
+                <mat-icon>edit</mat-icon>
             </button>
-    </div>
-    <div class="mat-elevation-z8">
-        <mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="Nombre">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Nombre}}</mat-cell>
-            </ng-container>
+                <button mat-icon-button (click)="onDelete(row)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            </mat-cell>
+        </ng-container>
 
-            <ng-container matColumnDef="Apellidos">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Apellidos</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Apellidos}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="Edad">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Edad</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Edad}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="Dni">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>DNI</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Dni}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="Cumpleaños">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Cumpleaños</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Cumpleanyos | date: 'dd/MM/yyyy' }}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="Color Favorito">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Color favorito</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Color}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="Sexo">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Sexo</mat-header-cell>
-                <mat-cell *matCellDef="let element">{{element.Sexo}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-
-                <mat-cell *matCellDef="let row">
-                    <button mat-icon-button (click)="onEdit(row)">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                    <button mat-icon-button (click)="onDelete(row)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSizeOptions]="[5,10,15,20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
-        <!--<app-crear-persona></app-crear-persona>-->
-    </div>
-</body>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5,10,15,20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+    <!--<app-crear-persona></app-crear-persona>-->
+</div>

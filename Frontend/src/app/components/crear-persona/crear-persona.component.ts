@@ -3,6 +3,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms'
 import { MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Persona } from 'src/app/entities/persona';
 import { NewServiceService } from 'src/app/services/new-service.service';
@@ -17,7 +18,8 @@ export class CrearPersonaComponent implements OnInit {
   crearPersonaForm: FormGroup;  
 
   constructor(private newService: NewServiceService,
-    private dialogRef: MatDialogRef<ListarPersonaComponent>) {
+    private dialogRef: MatDialogRef<ListarPersonaComponent>,
+    private _snackBar: MatSnackBar) {
     
     // Configuración de las validaciones del form
     this.crearPersonaForm = new FormGroup({
@@ -49,15 +51,14 @@ export class CrearPersonaComponent implements OnInit {
       }).subscribe(
         res => {
           // Mensaje de confirmación de creación
-
+          this._snackBar.open("Usuario creado correctamente","Descartar");
   
           // Limpiamos y cerramos
           this.crearPersonaForm.reset();
           this.dialogRef.close();
         }, (error) => {
         // Mensaje de error de creación
-          
-          
+          this._snackBar.open("Ha ocurrido un error","Descartar");
         }
       )}
 }

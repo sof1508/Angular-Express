@@ -9,6 +9,7 @@ import { Persona } from 'src/app/entities/persona';
 import { NewServiceService } from 'src/app/services/new-service.service';
 import { CrearPersonaComponent } from '../crear-persona/crear-persona.component';
 import { ModificarPersonaComponent } from '../modificar-persona/modificar-persona.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-listar-persona',
@@ -22,19 +23,17 @@ export class ListarPersonaComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
   constructor(private newService: NewServiceService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     // Añadir personas
-    this.newService.crearPersona(new Persona("Raúl","Lorenzo",32,"12345678j",new Date(1995,11,2),"Rojo","Hombre"));
-    this.newService.crearPersona(new Persona("Miguel","Cervantes",46,"12375679j",new Date(1945,4,23),"Morado","Hombre"));
+    //this.newService.crearPersona(new Persona("Raúl","Lorenzo",32,"12345678j",new Date(1995,11,2),"Rojo","Hombre"));
+    //this.newService.crearPersona(new Persona("Miguel","Cervantes",46,"12375679j",new Date(1945,4,23),"Morado","Hombre"));
+    this.dataSource = new MatTableDataSource([] as Persona[]);
 
     // Cargar lista de personas en la tabla
-    this.newService.listarPersonas().subscribe(
-      (res) => {
-        this.dataSource = new MatTableDataSource(res as Persona[]);
-      }
-    );
+    this.listarPersonas();
   }
 
 
@@ -76,11 +75,39 @@ export class ListarPersonaComponent implements OnInit {
 
   onDelete(persona: Persona){
     // Borrar persona
-    this.newService.borrarPersona(persona.Id);
+    this.newService.borrarPersona(persona._id).subscribe(
+      res => {
+        // Mensaje de confirmación de creación
+        this._snackBar.open("Usuario borrado correctamente","Descartar");
+
+        //Actualizar la tabla
+        this.listarPersonas();
+        this.updatePlugins();
+      
+      }, (error) => {
+        // Mensaje de error de creación
+        this._snackBar.open("Ha ocurrido un error","Descartar");
+      }
+    )
     
-    //Actualizar la tabla
-    this.listarPersonas();
-    this.updatePlugins();
+  }
+
+  onDeleteAll(){
+  // Borrar persona
+  this.newService.borrarTodo().subscribe(
+      res => {
+        // Mensaje de confirmación de creación
+        this._snackBar.open("Usuarios borrados correctamente","Descartar");
+
+        //Actualizar la tabla
+        this.listarPersonas();
+        this.updatePlugins();
+      
+      }, (error) => {
+        // Mensaje de error de creación
+        this._snackBar.open("Ha ocurrido un error","Descartar");
+      }
+    )
   }
 
   updatePlugins(){
@@ -98,5 +125,6 @@ export class ListarPersonaComponent implements OnInit {
       }
     );
   }
+
 
 }

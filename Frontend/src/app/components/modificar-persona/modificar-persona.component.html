@@ -26,7 +26,7 @@
 
         <mat-form-field class="campo" appearance="legacy">
             <mat-label for="Dni">Dni</mat-label>
-            <input matInput type="text" name="dni" id="dni" formControlName="dni" readonly/>
+            <input matInput type="text" name="dni" id="dni" formControlName="dni"/>
             <mat-error *ngIf="modificarPersonaForm.controls['dni'].errors?.required">Campo obligatorio</mat-error>
             <mat-error *ngIf="modificarPersonaForm.controls['dni'].errors?.pattern">El campo DNI debe ser de la forma 8 digitos y 1 letra</mat-error>
         </mat-form-field>

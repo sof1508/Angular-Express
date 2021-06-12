@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 //Componentes
 import { AppComponent } from './app.component';
@@ -34,6 +36,7 @@ import { ModificarPersonaComponent } from './components/modificar-persona/modifi
     ModificarPersonaComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
@@ -46,7 +49,8 @@ import { ModificarPersonaComponent } from './components/modificar-persona/modifi
     MatPaginatorModule,
     MatSortModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     NewServiceService
