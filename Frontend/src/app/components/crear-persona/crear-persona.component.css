@@ -1,0 +1,17 @@
+.contenedor {
+    width: 400 px;
+    margin-top: 200 px;
+}
+
+.contenedor-boton {
+    margin-left: 250px;
+}
+
+.campo {
+    display: block;
+    width: 400px;
+}
+
+.boton {
+    margin: 8px 8px 8px 0;
+}

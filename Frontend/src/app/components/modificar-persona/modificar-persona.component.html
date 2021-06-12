@@ -1,0 +1,62 @@
+<mat-toolbar>
+    <span>Modificar persona</span>
+</mat-toolbar>
+<form [formGroup]="modificarPersonaForm">
+    <div class="contenedor">
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="nombre">Nombre</mat-label>
+            <input matInput type="text" name="nombre" id="nombre" formControlName="nombre" />
+            <mat-error *ngIf="modificarPersonaForm.controls['nombre'].errors?.required">Campo obligatorio</mat-error>
+            <mat-error *ngIf="modificarPersonaForm.controls['nombre'].errors?.minlength">El campo nombre debe ser de al menos 3 carácteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="apellidos">Apellidos</mat-label>
+            <input matInput type="text" name="apellidos" id="apellidos" formControlName="apellidos" />
+            <mat-error *ngIf="modificarPersonaForm.controls['apellidos'].errors?.required">Campo obligatorio</mat-error>
+            <mat-error *ngIf="modificarPersonaForm.controls['apellidos'].errors?.minlength">El campo apellidos debe ser de al menos 3 carácteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="edad">Edad</mat-label>
+            <input matInput type="text" name="edad" id="edad" formControlName="edad" />
+            <mat-error *ngIf="modificarPersonaForm.controls['edad'].errors?.required">Campo obligatorio</mat-error>
+            <mat-error *ngIf="modificarPersonaForm.controls['edad'].errors?.pattern">El campo edad debe ser un número comprendido entre 0-125</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="Dni">Dni</mat-label>
+            <input matInput type="text" name="dni" id="dni" formControlName="dni" readonly/>
+            <mat-error *ngIf="modificarPersonaForm.controls['dni'].errors?.required">Campo obligatorio</mat-error>
+            <mat-error *ngIf="modificarPersonaForm.controls['dni'].errors?.pattern">El campo DNI debe ser de la forma 8 digitos y 1 letra</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="cumpleanyos">Cumpleaños</mat-label>
+            <input matInput type="date" name="cumpleanyos" id="cumpleanyos" formControlName="cumpleanyos" />
+            <mat-error *ngIf="modificarPersonaForm.controls['cumpleanyos'].errors?.required">Campo obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="color">Color favorito</mat-label>
+            <input matInput type="text" name="color" id="color" formControlName="color" />
+            <mat-error *ngIf="modificarPersonaForm.controls['color'].errors?.required">Campo obligatorio</mat-error>
+            <mat-error *ngIf="modificarPersonaForm.controls['color'].errors?.minlength">El campo color favorito debe ser de al menos 3 carácteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="campo" appearance="legacy">
+            <mat-label for="sexo">Sexo</mat-label>
+            <mat-select name="sexo" id="sexo" formControlName="sexo">
+                <mat-option value="Hombre">Hombre</mat-option>
+                <mat-option value="Mujer">Mujer</mat-option>
+                <mat-option value="Otro">Otro</mat-option>
+                <mat-option value="No especificado">No especificado</mat-option>
+            </mat-select>
+            <mat-error *ngIf="modificarPersonaForm.controls['sexo'].errors?.required">Campo obligatorio</mat-error>
+        </mat-form-field>
+        <div class="contenedor-boton">
+            <button class="boton" mat-raised-button color="warn" (click)="onCancelar()">Cancelar</button>
+            <button class="boton" type="submit" mat-raised-button [disabled]="modificarPersonaForm.invalid" (click)="onSubmit()">Modificar</button>
+        </div>
+    </div>
+</form>
